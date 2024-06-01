@@ -390,7 +390,7 @@ module.exports = {
                                     });
                                 }
                             } else {
-                                i.reply({ content: `Only <@${interaction.user.id}> can interact in this area!`, ephemeral: true });
+                                await i.reply({ content: `Only <@${interaction.user.id}> can interact in this area!`, ephemeral: true });
                             }
                         });
 
