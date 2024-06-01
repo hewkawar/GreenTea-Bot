@@ -16,7 +16,7 @@ module.exports = {
                 .addFields(
                     {
                         name: "Latency",
-                        value: `\`\`\`${(interaction.createdTimestamp - Date.now()).toLocaleString()} ms\`\`\``,
+                        value: `\`\`\`${(Date.now() - interaction.createdTimestamp).toLocaleString()} ms\`\`\``,
                         inline: true
                     },
                     {
