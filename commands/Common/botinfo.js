@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, Colors } = require("discord.js");
+const mongoose = require("mongoose");
 const os = require("os");
 
 const botInfo = require("../../data/info.json");
@@ -132,6 +133,11 @@ module.exports = {
                         {
                             name: "Bot Version",
                             value: `\`\`\`v${package.version}\`\`\``,
+                            inline: true
+                        },
+                        {
+                            name: "Database",
+                            value: `\`\`\`${mongoose.connection ? "🟢" : "🔴"} MongoDB\`\`\``,
                             inline: true
                         },
                         {
