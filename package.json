@@ -1,0 +1,33 @@
+{
+  "name": "greentea-bot",
+  "version": "1.0.0",
+  "description": "Source Code of Green Tea Bot",
+  "main": "index.js",
+  "scripts": {
+    "bot": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hewkawar/GreenTea-Bot.git"
+  },
+  "keywords": [
+    "greentea",
+    "greenteabot",
+    "GreenTea",
+    "GreenTeaBot"
+  ],
+  "author": "HewkawAr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hewkawar/GreenTea-Bot/issues"
+  },
+  "homepage": "https://github.com/hewkawar/GreenTea-Bot#readme",
+  "dependencies": {
+    "discord.js": "^14.15.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.2"
+  }
+}
