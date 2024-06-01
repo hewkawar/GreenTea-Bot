@@ -395,9 +395,7 @@ module.exports = {
                         });
 
                         collector.on("end", async (collected) => {
-                            if (message) await message.edit({
-                                components: []
-                            });
+                            if (message) await message.delete();
                         });
                     });
                 } catch (error) {
