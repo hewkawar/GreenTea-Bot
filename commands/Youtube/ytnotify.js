@@ -395,7 +395,9 @@ module.exports = {
                         });
 
                         collector.on("end", async (collected) => {
-                            if (message) await message.delete();
+                            const channel = await client.channels.fetch(message.channelId);
+                            const nowMessage = await channel.messages.fetch(message.id);
+                            if (nowMessage) await nowMessage.delete();
                         });
                     });
                 } catch (error) {
