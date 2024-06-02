@@ -34,15 +34,18 @@ module.exports = {
                     const latestEntry = entries[0];
                     const latestVideoId = latestEntry['yt:videoId'][0];
 
-                    if (latestVideoId != notify.LastVideoId) {
-                        const notifyMessage = notify.CustomMessage.replace("{channel}", authorName).replace("{url}", `https://youtu.be/${latestVideoId}`)
+                    if (latestVideoId != notify.LastVideoId && !notify.Notified.includes(latestVideoId)) {
+                        const notifyMessage = notify.CustomMessage.replace("{channel}", authorName).replace("{url}", `https://youtu.be/${latestVideoId}`);
+
+                        const updateNotified = notify.Notified.push(latestVideoId);
 
                         await channel.send(notifyMessage);
 
                         await YTNotifySchema.updateOne({
                             _id: notify._id.toString()
                         }, {
-                            LastVideoId: latestVideoId
+                            LastVideoId: latestVideoId,
+                            Notified: updateNotified
                         });
                     }
                 });
