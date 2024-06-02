@@ -4,6 +4,3 @@ language = "en"
 multilingual = false
 src = "docs"
 title = "Green Tea Document"
-
-[rust]
-edition = "2024"
