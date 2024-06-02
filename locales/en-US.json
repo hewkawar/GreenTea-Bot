@@ -1,0 +1,78 @@
+{
+    "command.ping.latency": "Latency",
+    "command.ping.api": "API",
+    "command.ping.pong": "Pong",
+
+    "command.invite.invite": "Invite",
+    "command.invite": "You can invite {0} here **[discord.com/oauth2/authorize]({1})**",
+
+    "command.botinfo.infomation": "{0} Information",
+    "command.botinfo.developers": "Developer(s)",
+    "command.botinfo.botversion": "Bot Version",
+    "command.botinfo.database": "Database",
+    "command.botinfo.system": "System",
+    "command.botinfo.servers": "Server(s)",
+    "command.botinfo.shards": "Shard(s)",
+    "command.botinfo.bot.uptime": "Bot Uptime",
+    "command.botinfo.system.uptime": "System Uptime",
+
+    "command.botinfo.cpu": "CPU",
+    "command.botinfo.cpu.load": "CPU Load",
+    "command.botinfo.ram": "RAM",
+    "command.botinfo.ram.use": "RAM Used",
+
+    "command.ytnotify.add.success": "Successfully set {0} to listen to\n{1}",
+    "command.ytnotify.add.fail.notfound": "Notfound Channel with `{1}`",
+
+    "command.ytnotify.list.nonotifications": "No Notifications",
+    "command.ytnotify.list.nonotifications.description": "You have no notifications set up.\n\nTo add a notification, use the `ytnotify add` command.",
+
+    "command.ytnotify.list.button.delete": "Delete",
+    "command.ytnotify.list.button.editMessage": "Edit Custom Message",
+    "command.ytnotify.list.button.resetMessage": "Reset Message",
+    "command.ytnotify.list.button.testNotification": "Test Notification",
+
+    "command.ytnotify.list.selectmenu.channelSelector.placeholder": "Channel to notify",
+
+    "command.ytnotify.list.subsctiptionmanager": "Subscription Manager",
+    "command.ytnotify.list.subsctiptionmanager.channel": "Channel",
+    "command.ytnotify.list.subsctiptionmanager.discordchannel": "Discord Channel",
+    "command.ytnotify.list.subsctiptionmanager.message": "Message",
+
+    "command.ytnotify.list.dialog.delete.title": "Delete A Subscription?",
+    "command.ytnotify.list.dialog.delete.confirmInput": "Confirmation",
+    "command.ytnotify.list.dialog.delete.confirmInput.placeholder": "Type \"delete\" to confirm deletion",
+
+    "command.ytnotify.list.dialog.editMessage.title": "Editing Message",
+    "command.ytnotify.list.dialog.editMessage.messageInput": "Message",
+    "command.ytnotify.list.dialog.editMessage.messageInput.placeholder": "{channel}\n{url}",
+    
+    "command.ytnotify.list.dialog.resetMessage.title": "Reset Message?",
+    "command.ytnotify.list.dialog.resetMessage.confirmInput": "Confirmation",
+    "command.ytnotify.list.dialog.resetMessage.confirmInput.placeholder": "Type \"reset\" to confirm reset",
+
+    "command.ytnotify.list.testNotification.sended": "Sended Test Notification to <#{0}>",
+
+    "command.ytnotify.list.channelSelector.success": "Change channel success!",
+
+    "command.ytnotify.list.onlyownercaninteraction": "Only <@{0}> can interact in this area!",
+
+    "modal.submit.YTNotifyModel.delete.success": "Unsubscribed from **{0}** in <#{1}>",
+    "modal.submit.YTNotifyModel.delete.fail": "Can't unsubscribed. Please try again later.",
+
+    "modal.submit.YTNotifyModel.editMessage.success": "Edited Message to ```{0}```",
+    "modal.submit.YTNotifyModel.editMessage.fail": "Can't edit message. Please try again later.",
+
+    "modal.submit.YTNotifyModel.resetMessage.success": "Reseted Message to ```New video from **{channel}**!\n{url}```",
+    "modal.submit.YTNotifyModel.resetMessage.fail": "Can't reset message. Please try again later.",
+
+    "database.mongodb": "MongoDB",
+
+    "byte.gb": "GB",
+
+    "time.ms": "ms",
+    "time.days": "days",
+    "time.hours": "hours",
+    "time.minutes": "minutes",
+    "time.seconds": "seconds"
+}

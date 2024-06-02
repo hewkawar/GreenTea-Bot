@@ -4,6 +4,7 @@ const ytsr = require("ytsr");
 const axios = require("axios");
 
 const YTNotifySchema = require("../../schemas/YTNotify");
+const { Locale } = require("../../class/Locale");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -60,6 +61,7 @@ module.exports = {
         }
     },
     async execute(interaction, client) {
+        const locale = new Locale(interaction.locale);
         const { options } = interaction;
         const sub = options.getSubcommand();
 
@@ -72,45 +74,61 @@ module.exports = {
                 const ytUrl = new URL("https://www.youtube.com/feeds/videos.xml");
                 ytUrl.searchParams.set("channel_id", ytChannelId);
 
-                const ytChannel = await axios.get(ytUrl.toString());
+                try {
+                    const ytChannel = await axios.get(ytUrl.toString());
 
-                if (ytChannel.status == 200) {
-                    parseString(ytChannel.data, async (err, result) => {
-                        if (err) {
-                            console.error('Error parsing XML:', err);
-                            return await interaction.editReply({
+                    if (ytChannel.status == 200) {
+                        parseString(ytChannel.data, async (err, result) => {
+                            if (err) {
+                                console.error('Error parsing XML:', err);
+                                return await interaction.editReply({
+                                    embeds: [
+                                        new EmbedBuilder()
+                                            .setColor(Colors.Red)
+                                            .setDescription(locale.replacePlaceholders(locale.getLocaleString("command.ytnotify.add.fail.notfound"), [discordChannel, ytChannelId]))
+                                        ]
+                                });;
+                            }
+
+                            const entries = result.feed.entry || [];
+                            const latestEntry = entries[0];
+                            const latestVideoId = latestEntry['yt:videoId'][0];
+
+                            const profileUrl = `https://www.youtube.com/channel/${ytChannelId}`;
+
+                            await YTNotifySchema.create({
+                                GuildId: interaction.guildId,
+                                ChannelId: discordChannel.id,
+                                YoutubeChannelId: ytChannelId,
+                                LastVideoId: latestVideoId,
+                                CustomMessage: "New video from **{channel}**!\n{url}"
+                            });
+
+                            await interaction.editReply({
                                 embeds: [
                                     new EmbedBuilder()
                                         .setColor(Colors.Red)
-                                        .setDescription(`Fail to set ${discordChannel} to listen to\n${ytChannelId}`)
-                                ]
-                            });;
-                        }
-
-                        const entries = result.feed.entry || [];
-                        const latestEntry = entries[0];
-                        const latestVideoId = latestEntry['yt:videoId'][0];
-
-                        const profileUrl = `https://www.youtube.com/channel/${ytChannelId}`;
-
-                        await YTNotifySchema.create({
-                            GuildId: interaction.guildId,
-                            ChannelId: discordChannel.id,
-                            YoutubeChannelId: ytChannelId,
-                            LastVideoId: latestVideoId,
-                            CustomMessage: "New video from **{channel}**!\n{url}"
+                                        .setDescription(locale.replacePlaceholders(locale.getLocaleString("command.ytnotify.add.success"), [discordChannel, profileUrl]))
+                                    ]
+                            });
                         });
-
-                        await interaction.editReply({
+                    } else {
+                        return await interaction.editReply({
                             embeds: [
                                 new EmbedBuilder()
                                     .setColor(Colors.Red)
-                                    .setDescription(`Successfully set ${discordChannel} to listen to\n${profileUrl}`)
-                            ]
+                                    .setDescription(locale.replacePlaceholders(locale.getLocaleString("command.ytnotify.add.fail.notfound"), [discordChannel, ytChannelId]))
+                                ]
                         });
+                    }
+                } catch (err) {
+                    return await interaction.editReply({
+                        embeds: [
+                            new EmbedBuilder()
+                                .setColor(Colors.Red)
+                                .setDescription(locale.replacePlaceholders(locale.getLocaleString("command.ytnotify.add.fail.notfound"), [discordChannel, ytChannelId]))
+                        ]
                     });
-                } else {
-
                 }
                 break;
             case "list":
@@ -126,8 +144,8 @@ module.exports = {
                             embeds: [
                                 new EmbedBuilder()
                                     .setColor(Colors.Red)
-                                    .setTitle("No Notifications")
-                                    .setDescription("You have no notifications set up.\n\nTo add a notification, use the `ytnotify add` command.")
+                                    .setTitle(locale.getLocaleString("command.ytnotify.list.nonotifications"))
+                                    .setDescription(locale.getLocaleString("command.ytnotify.list.nonotifications.description"))
                             ]
                         });
                         return;
@@ -148,25 +166,25 @@ module.exports = {
 
                         const deleteBtn = new ButtonBuilder()
                             .setCustomId("delete")
-                            .setLabel("Delete")
+                            .setLabel(locale.getLocaleString("command.ytnotify.list.button.delete"))
                             .setEmoji("🗑️")
                             .setStyle(ButtonStyle.Danger);
 
                         const editMessageBtn = new ButtonBuilder()
                             .setCustomId("editMessage")
-                            .setLabel("Edit Custom Message")
+                            .setLabel(locale.getLocaleString("command.ytnotify.list.button.editMessage"))
                             .setEmoji("✏️")
                             .setStyle(ButtonStyle.Secondary);
 
                         const resetMessageBtn = new ButtonBuilder()
                             .setCustomId("resetMessage")
-                            .setLabel("Reset Message")
-                            .setEmoji("❌")
+                            .setLabel(locale.getLocaleString("command.ytnotify.list.button.resetMessage"))
+                            .setEmoji("🔃")
                             .setStyle(ButtonStyle.Secondary);
 
                         const testBtn = new ButtonBuilder()
                             .setCustomId("testNotification")
-                            .setLabel("Test Notification")
+                            .setLabel(locale.getLocaleString("command.ytnotify.list.button.testNotification"))
                             .setEmoji("🔔")
                             .setStyle(ButtonStyle.Primary);
 
@@ -208,7 +226,7 @@ module.exports = {
 
                         const selectmenu = new StringSelectMenuBuilder()
                             .setCustomId("channelSelector")
-                            .setPlaceholder("Channel to notify");
+                            .setPlaceholder(locale.getLocaleString("command.ytnotify.list.selectmenu.channelSelector.placeholder"));
 
                         guildChannels.map((channel) => {
                             const option = new StringSelectMenuOptionBuilder().setLabel(`${channel.author.name} - #${channel.discordChannelId.name}`).setValue(channel.id);
@@ -225,20 +243,20 @@ module.exports = {
                             embeds: [
                                 new EmbedBuilder()
                                     .setColor(Colors.Red)
-                                    .setTitle("Subscription Manager")
+                                    .setTitle(locale.getLocaleString("command.ytnotify.list.subsctiptionmanager"))
                                     .addFields(
                                         {
-                                            name: "Channel",
+                                            name: locale.getLocaleString("command.ytnotify.list.subsctiptionmanager.channel"),
                                             value: `**[${authorName}](${authorUrl})**`,
                                             inline: true
                                         },
                                         {
-                                            name: "Discord Channel",
+                                            name: locale.getLocaleString("command.ytnotify.list.subsctiptionmanager.discordchannel"),
                                             value: `<#${subscription.ChannelId}>`,
                                             inline: true
                                         },
                                         {
-                                            name: "Message",
+                                            name: locale.getLocaleString("command.ytnotify.list.subsctiptionmanager.message"),
                                             value: `\`\`\`${subscription.CustomMessage}\`\`\``,
                                             inline: false
                                         }
@@ -261,16 +279,16 @@ module.exports = {
                                 if (i.customId == "delete") {
                                     const modal = new ModalBuilder()
                                         .setCustomId(`YTN_1_${selectedId}_${message.id}`)
-                                        .setTitle("Delete A Subscription?");
+                                        .setTitle(locale.getLocaleString("command.ytnotify.list.dialog.delete.title"));
 
                                     const confirmInput = new TextInputBuilder()
                                         .setCustomId("confirmInput")
-                                        .setLabel("Confirmation")
+                                        .setLabel(locale.getLocaleString("command.ytnotify.list.dialog.delete.confirmInput"))
                                         .setStyle(TextInputStyle.Short)
                                         .setMaxLength(6)
                                         .setMinLength(6)
                                         .setRequired(true)
-                                        .setPlaceholder('Type "delete" to confirm deletion');
+                                        .setPlaceholder(locale.getLocaleString("command.ytnotify.list.dialog.delete.confirmInput.placeholder"));
 
                                     const confirmActionRow = new ActionRowBuilder().addComponents(confirmInput);
 
@@ -280,17 +298,17 @@ module.exports = {
                                 } else if (i.customId == "editMessage") {
                                     const modal = new ModalBuilder()
                                         .setCustomId(`YTN_2_${selectedId}_${message.id}`)
-                                        .setTitle("Editing Message");
+                                        .setTitle(locale.getLocaleString("command.ytnotify.list.dialog.editMessage.title"));
 
                                     const oldData = await YTNotifySchema.findById(selectedId);
 
                                     const messageInput = new TextInputBuilder()
                                         .setCustomId("messageInput")
-                                        .setLabel("Message")
+                                        .setLabel(locale.getLocaleString("command.ytnotify.list.dialog.editMessage.messageInput"))
                                         .setStyle(TextInputStyle.Paragraph)
                                         .setRequired(true)
                                         .setValue(oldData.CustomMessage)
-                                        .setPlaceholder('{channel}\n{url}');
+                                        .setPlaceholder(locale.getLocaleString("command.ytnotify.list.dialog.editMessage.messageInput.placeholder"));
 
                                     const messageInputActionRow = new ActionRowBuilder().addComponents(messageInput);
 
@@ -300,16 +318,16 @@ module.exports = {
                                 } else if (i.customId == "resetMessage") {
                                     const modal = new ModalBuilder()
                                         .setCustomId(`YTN_3_${selectedId}_${message.id}`)
-                                        .setTitle("Reset Message?");
+                                        .setTitle(locale.getLocaleString("command.ytnotify.list.dialog.resetMessage.title"));
 
                                     const confirmInput = new TextInputBuilder()
                                         .setCustomId("confirmInput")
-                                        .setLabel("Confirmation")
+                                        .setLabel(locale.getLocaleString("command.ytnotify.list.dialog.resetMessage.confirmInput"))
                                         .setStyle(TextInputStyle.Short)
                                         .setMaxLength(5)
                                         .setMinLength(5)
                                         .setRequired(true)
-                                        .setPlaceholder('Type "reset" to confirm reset');
+                                        .setPlaceholder(locale.getLocaleString("command.ytnotify.list.dialog.resetMessage.confirmInput.placeholder"));
 
                                     const confirmActionRow = new ActionRowBuilder().addComponents(confirmInput);
 
@@ -329,7 +347,7 @@ module.exports = {
                                     await channel.send(notifyMessage);
 
                                     await i.reply({
-                                        content: `Sended Test Notification to <#${data.ChannelId}>`,
+                                        content: locale.replacePlaceholders(locale.getLocaleString("command.ytnotify.list.testNotification.sended"), [data.ChannelId]),
                                         ephemeral: true
                                     });
 
@@ -359,20 +377,20 @@ module.exports = {
                                             embeds: [
                                                 new EmbedBuilder()
                                                     .setColor(Colors.Red)
-                                                    .setTitle("Subscription Manager")
+                                                    .setTitle(locale.getLocaleString("command.ytnotify.list.subsctiptionmanager"))
                                                     .addFields(
                                                         {
-                                                            name: "Channel",
+                                                            name: locale.getLocaleString("command.ytnotify.list.subsctiptionmanager.channel"),
                                                             value: `**[${authorName}](${authorUrl})**`,
                                                             inline: true
                                                         },
                                                         {
-                                                            name: "Discord Channel",
+                                                            name: locale.getLocaleString("command.ytnotify.list.subsctiptionmanager.discordchannel"),
                                                             value: `<#${data.ChannelId}>`,
                                                             inline: true
                                                         },
                                                         {
-                                                            name: "Message",
+                                                            name: locale.getLocaleString("command.ytnotify.list.subsctiptionmanager.message"),
                                                             value: `\`\`\`${data.CustomMessage}\`\`\``,
                                                             inline: false
                                                         }
@@ -384,20 +402,20 @@ module.exports = {
                                         });
 
                                         await i.reply({
-                                            content: "Success!",
+                                            content: locale.getLocaleString("command.ytnotify.list.channelSelector.success"),
                                             ephemeral: true
                                         });
                                     });
                                 }
                             } else {
-                                await i.reply({ content: `Only <@${interaction.user.id}> can interact in this area!`, ephemeral: true });
+                                await i.reply({ content: locale.replacePlaceholders(locale.getLocaleString("command.ytnotify.list.onlyownercaninteraction"), [interaction.user.id]), ephemeral: true });
                             }
                         });
 
                         collector.on("end", async (collected) => {
-                            const channel = await client.channels.fetch(message.channelId);
-                            const nowMessage = await channel.messages.fetch(message.id);
-                            if (nowMessage) await nowMessage.delete();
+                            try {
+                                await message.delete();
+                            } catch (err) { }
                         });
                     });
                 } catch (error) {

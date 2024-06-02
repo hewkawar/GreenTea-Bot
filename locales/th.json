@@ -1,0 +1,78 @@
+{
+    "command.ping.latency": "ความหน่วง",
+    "command.ping.api": "API",
+    "command.ping.pong": "ปอง",
+
+    "command.invite.invite": "เชิญบอท",
+    "command.invite": "คุณสามารถเชิญบอท {0} ได้ที่นี **[discord.com/oauth2/authorize]({1})**",
+
+    "command.botinfo.infomation": "รายละเอียดของ {0}",
+    "command.botinfo.developers": "ผู้พัฒนา",
+    "command.botinfo.botversion": "เวอร์ชั่น",
+    "command.botinfo.database": "ฐานข้อมูล",
+    "command.botinfo.system": "ระบบ",
+    "command.botinfo.servers": "เซิฟเวอร์",
+    "command.botinfo.shards": "Shard(s)",
+    "command.botinfo.bot.uptime": "Bot Uptime",
+    "command.botinfo.system.uptime": "System Uptime",
+
+    "command.botinfo.cpu": "CPU",
+    "command.botinfo.cpu.load": "CPU Load",
+    "command.botinfo.ram": "RAM",
+    "command.botinfo.ram.use": "RAM Used",
+
+    "command.ytnotify.add.success": "เพิ่มการแจ้งเตือนช่อง {0} ด้วย\n{1}",
+    "command.ytnotify.add.fail.notfound": "ไม่พบช่องที่ค้นหาด้วย `{1}`",
+
+    "command.ytnotify.list.nonotifications": "ไม่พบการติดตาม",
+    "command.ytnotify.list.nonotifications.description": "คุณสามารถสร้างการติดตามได้ตลอด\n\nเพียงแค่ใช้คำสั่ง `ytnotify add`",
+
+    "command.ytnotify.list.button.delete": "ลบ",
+    "command.ytnotify.list.button.editMessage": "แก้ไขข้อความ",
+    "command.ytnotify.list.button.resetMessage": "รีเซ็ตข้อความ",
+    "command.ytnotify.list.button.testNotification": "ทดสอบการแจ้งเตือน",
+
+    "command.ytnotify.list.selectmenu.channelSelector.placeholder": "เลือกช่องที่ติดตาม",
+
+    "command.ytnotify.list.subsctiptionmanager": "ตัวจัดการการติดตาม",
+    "command.ytnotify.list.subsctiptionmanager.channel": "ช่อง",
+    "command.ytnotify.list.subsctiptionmanager.discordchannel": "ช่อง Discord",
+    "command.ytnotify.list.subsctiptionmanager.message": "ข้อความ",
+
+    "command.ytnotify.list.dialog.delete.title": "ต้องการลบการแจ้งเตือน?",
+    "command.ytnotify.list.dialog.delete.confirmInput": "ยืนยัน",
+    "command.ytnotify.list.dialog.delete.confirmInput.placeholder": "เขียน \"delete\" เพื่อยืนยันการลบ",
+
+    "command.ytnotify.list.dialog.editMessage.title": "แก้ไขข้อความ",
+    "command.ytnotify.list.dialog.editMessage.messageInput": "ข้อความ",
+    "command.ytnotify.list.dialog.editMessage.messageInput.placeholder": "{channel}\n{url}",
+    
+    "command.ytnotify.list.dialog.resetMessage.title": "รีเซ็ตข้อความ?",
+    "command.ytnotify.list.dialog.resetMessage.confirmInput": "ยืนยัน",
+    "command.ytnotify.list.dialog.resetMessage.confirmInput.placeholder": "เขียน \"reset\" เพื่อยืนยันการรีเซ็ต",
+
+    "command.ytnotify.list.testNotification.sended": "ส่งการทดสอบแจ้งเตือนไปยัง <#{0}> แล้ว",
+
+    "command.ytnotify.list.channelSelector.success": "เปลี่ยนช่องสำเร็จ!",
+
+    "command.ytnotify.list.onlyownercaninteraction": "มีเพียง <@{0}> เท่านั้นที่สามารถโต้ตอบกับข้อความนี้",
+
+    "modal.submit.YTNotifyModel.delete.success": "เลิกติดตาม **{0}** ในช่อง <#{1}> แล้ว",
+    "modal.submit.YTNotifyModel.delete.fail": "ไม่สามารถยกเลิกการแจ้งเตือนได้ในขณะนี้ กรุณาลองอีกครั้งภายหลัง",
+
+    "modal.submit.YTNotifyModel.editMessage.success": "แก้ไขข้อความสำเร็จ ```{0}```",
+    "modal.submit.YTNotifyModel.editMessage.fail": "ไม่สามารถแก้ไขข้อความได้ กรุณาลองอีกครั้งภายหลัง",
+
+    "modal.submit.YTNotifyModel.resetMessage.success": "รีเซ็ตข้อความสำเร็จ ```New video from **{channel}**!\n{url}```",
+    "modal.submit.YTNotifyModel.resetMessage.fail": "ไม่สามารถรีเซ็ตข้อความได้ กรุณาลองอีกครั้งภายหลัง",
+
+    "database.mongodb": "MongoDB",
+
+    "byte.gb": "GB",
+
+    "time.ms": "ms",
+    "time.days": "days",
+    "time.hours": "hours",
+    "time.minutes": "minutes",
+    "time.seconds": "seconds"
+}
