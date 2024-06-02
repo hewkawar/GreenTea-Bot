@@ -66,6 +66,24 @@
     "modal.submit.YTNotifyModel.resetMessage.success": "รีเซ็ตข้อความสำเร็จ ```New video from **{channel}**!\n{url}```",
     "modal.submit.YTNotifyModel.resetMessage.fail": "ไม่สามารถรีเซ็ตข้อความได้ กรุณาลองอีกครั้งภายหลัง",
 
+    "command.giveaway.create.title": "สร้างกิจกรรมแจกของใหม่",
+    "command.giveaway.create.period": "ระยะเวลา",
+    "command.giveaway.create.period.placeholder": "ตัวอย่าง. 10 seconds, 30 minutes, 24 hours, 1 day, 2 weeks, 3 months or 1 years",
+    "command.giveaway.create.winner": "จำนวนผู้ชนะ",
+    "command.giveaway.create.winner.placeholder": "ตัวอย่าง. 1",
+    "command.giveaway.create.reward": "ของรางวัล",
+    "command.giveaway.create.reward.placeholder": "ตัวอย่าง. อั่งเปาทรูมันนี่จำนวน 100 บาท",
+    "command.giveaway.create.description": "รายละเอียด",
+    "command.giveaway.create.description.placeholder": "ตัวอย่าง. อั่งเปาทรูมันนี่จำนวน 100 บาท จำนวน 1 รางวัล",
+    
+    "modal.submit.giveaway.create.success": "สร้างกิจกรรมแล้วด้วย Id: `{0}`",
+
+    "command.giveaway.end.success": "Scheduled giveaway to end, it may take up to a minute to finish",
+    "command.giveaway.end.notfound": "Not Found Giveaway",
+
+    "event.giveaway.send": "🎉 ขอแสดงความยินดีกับ {0}! ได้รับ **{1}**!",
+    "event.giveaway.end.nowinner": "🎉 ไม่คนใครชนะกิจกรรม **{0}**",
+
     "database.mongodb": "MongoDB",
 
     "byte.gb": "GB",

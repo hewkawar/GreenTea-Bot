@@ -29,6 +29,15 @@ class Locale {
             return typeof data[number] !== 'undefined' ? data[number] : match;
         });
     }
+
+    getDefaultString(id) {
+        try {
+            if (en_US[id]) return en_US[id];
+            else return "Placeholder Locale";
+        } catch (err) {
+            return "Placeholder Locale";
+        }
+    }
 }
 
 module.exports = {

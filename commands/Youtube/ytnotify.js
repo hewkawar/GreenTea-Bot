@@ -86,8 +86,8 @@ module.exports = {
                                         new EmbedBuilder()
                                             .setColor(Colors.Red)
                                             .setDescription(locale.replacePlaceholders(locale.getLocaleString("command.ytnotify.add.fail.notfound"), [discordChannel, ytChannelId]))
-                                        ]
-                                });;
+                                    ]
+                                });
                             }
 
                             const entries = result.feed.entry || [];
@@ -109,7 +109,7 @@ module.exports = {
                                     new EmbedBuilder()
                                         .setColor(Colors.Red)
                                         .setDescription(locale.replacePlaceholders(locale.getLocaleString("command.ytnotify.add.success"), [discordChannel, profileUrl]))
-                                    ]
+                                ]
                             });
                         });
                     } else {
@@ -118,7 +118,7 @@ module.exports = {
                                 new EmbedBuilder()
                                     .setColor(Colors.Red)
                                     .setDescription(locale.replacePlaceholders(locale.getLocaleString("command.ytnotify.add.fail.notfound"), [discordChannel, ytChannelId]))
-                                ]
+                            ]
                         });
                     }
                 } catch (err) {
