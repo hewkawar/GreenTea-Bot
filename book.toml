@@ -3,4 +3,7 @@ authors = ["HewkawAr"]
 language = "en"
 multilingual = false
 src = "docs"
-title = "Green Tea"
+title = "Green Tea Document"
+
+[rust]
+edition = "2024"
