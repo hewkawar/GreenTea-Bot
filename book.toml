@@ -4,3 +4,9 @@ language = "en"
 multilingual = false
 src = "docs"
 title = "Green Tea Document"
+
+[output.html]
+smart-punctuation = true
+mathjax-support = true
+git-repository-url = "https://github.com/hewkawar/GreenTea-Bot"
+edit-url-template = "https://github.com/hewkawar/GreenTea-Bot/edit/master/docs/{path}"
