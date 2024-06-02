@@ -5,7 +5,8 @@ module.exports = models.YTNotify || model("YTNotify", new Schema({
     ChannelId: String,
     YoutubeChannelId: String,
     LastVideoId: String,
-    CustomMessage: String
+    CustomMessage: String,
+    Notified: [String]
 }, {
     timestamps: true
 }))
