@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t hewkawar/greentea-bot:latest -f ./build/Dockerfile .
+        run: docker build -t hewkawar/greentea-bot:latest -f ./.docker/Dockerfile .
         
       - name: Push Docker image
         run: docker push hewkawar/greentea-bot:latest
