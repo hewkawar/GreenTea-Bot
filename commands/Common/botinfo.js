@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, Colors } = require("discord.js");
+const { Locale } = require("../../class/Locale");
 const mongoose = require("mongoose");
 const os = require("os");
 
@@ -28,21 +29,21 @@ function getCpuLoad() {
     return usage;
 }
 
-function getBotUptime() {
+function getBotUptime(locale) {
     let totalSeconds = process.uptime();
-    const uptime = uptimeString(totalSeconds);
+    const uptime = uptimeString(totalSeconds, locale);
 
     return uptime
 }
 
-function getSystemUptime() {
+function getSystemUptime(locale) {
     let totalSeconds = os.uptime();
-    const uptime = uptimeString(totalSeconds);
+    const uptime = uptimeString(totalSeconds, locale);
 
     return uptime
 }
 
-function getSystemInfo() {
+function getSystemInfo(locale) {
     const cpuName = os.cpus()[0].model;
     const cpuLoad = getCpuLoad();
     const totalMem = os.totalmem();
@@ -54,7 +55,7 @@ function getSystemInfo() {
     const usedMemGB = (usedMem / (1024 ** 3)).toFixed(2);
     const freeMemGB = (freeMem / (1024 ** 3)).toFixed(2);
 
-    const uptime = getSystemUptime();
+    const uptime = getSystemUptime(locale);
 
     return {
         cpu: {
@@ -74,7 +75,7 @@ function getSystemInfo() {
     }
 }
 
-function uptimeString(totalSeconds) {
+function uptimeString(totalSeconds, locale) {
     let days = Math.floor(totalSeconds / 86400);
     totalSeconds %= 86400;
     let hours = Math.floor(totalSeconds / 3600);
@@ -85,19 +86,19 @@ function uptimeString(totalSeconds) {
     let string = "";
 
     if (days > 0) {
-        string += `${days} days, `;
+        string += `${days} ${locale.getLocaleString("time.days")}, `;
     }
 
     if (hours > 0) {
-        string += `${hours} hours, `;
+        string += `${hours} ${locale.getLocaleString("time.hours")}, `;
     }
 
     if (minutes > 0) {
-        string += `${minutes} minutes, `;
+        string += `${minutes} ${locale.getLocaleString("time.minutes")}, `;
     }
 
     if (seconds > 0) {
-        string += `${seconds} seconds`;
+        string += `${seconds} ${locale.getLocaleString("time.seconds")}`;
     }
 
     if (string.endsWith(", ")) {
@@ -115,53 +116,55 @@ module.exports = {
             th: "ข้อมูลบอท"
         }),
     async execute(interaction, client) {
-        const BotUptime = getBotUptime();
+        const locale = new Locale(interaction.locale);
 
-        const system = getSystemInfo();
+        const BotUptime = getBotUptime(locale);
+
+        const system = getSystemInfo(locale);
 
         await interaction.reply({
             embeds: [
                 new EmbedBuilder()
                     .setColor(Colors.Green)
-                    .setTitle("Green Tea Information")
+                    .setTitle(locale.replacePlaceholders(locale.getLocaleString("command.botinfo.infomation"), [client.user.displayName]))
                     .addFields(
                         {
-                            name: "Developer(s)",
+                            name: locale.getLocaleString("command.botinfo.developers"),
                             value: `\`\`\`${botInfo.developers.map(developer => developer.name).join(", ")}\`\`\``,
                             inline: true
                         },
                         {
-                            name: "Bot Version",
+                            name: locale.getLocaleString("command.botinfo.botversion"),
                             value: `\`\`\`v${package.version}\`\`\``,
                             inline: true
                         },
                         {
-                            name: "Database",
-                            value: `\`\`\`${mongoose.connection ? "🟢" : "🔴"} MongoDB\`\`\``,
+                            name: locale.getLocaleString("command.botinfo.database"),
+                            value: `\`\`\`${mongoose.connection ? "🟢" : "🔴"} ${locale.getLocaleString("database.mongodb")}\`\`\``,
                             inline: true
                         },
                         {
-                            name: "System",
-                            value: `\`\`\`CPU: ${system.cpu.name}\nCPU Load: ${system.cpu.load.toFixed(2)}%\nRAM: ${system.ram.useGB} GB / ${system.ram.totalGB} GB\nRAM Used: ${system.ram.usePercentage.toFixed(2)}%\`\`\``,
+                            name: locale.getLocaleString("command.botinfo.system"),
+                            value: `\`\`\`${locale.getLocaleString("command.botinfo.cpu")}: ${system.cpu.name}\n${locale.getLocaleString("command.botinfo.cpu.load")}: ${system.cpu.load.toFixed(2)}%\n${locale.getLocaleString("command.botinfo.ram")}: ${system.ram.useGB} ${locale.getLocaleString("byte.gb")} / ${system.ram.totalGB} ${locale.getLocaleString("byte.gb")}\n${locale.getLocaleString("command.botinfo.ram.use")}: ${system.ram.usePercentage.toFixed(2)}%\`\`\``,
                             inline: false
                         },
                         {
-                            name: "Server(s)",
+                            name: locale.getLocaleString("command.botinfo.servers"),
                             value: `\`\`\`${client.guilds.cache.size.toLocaleString()}\`\`\``,
                             inline: true
                         },
                         {
-                            name: "Shard(s)",
+                            name: locale.getLocaleString("command.botinfo.shards"),
                             value: `\`\`\`${client.shard.count}\`\`\``,
                             inline: true
                         },
                         {
-                            name: "Bot Uptime",
+                            name: locale.getLocaleString("command.botinfo.bot.uptime"),
                             value: `\`\`\`${BotUptime}\`\`\``,
                             inline: false
                         },
                         {
-                            name: "System Uptime",
+                            name: locale.getLocaleString("command.botinfo.system.uptime"),
                             value: `\`\`\`${system.uptime}\`\`\``,
                             inline: false
                         }

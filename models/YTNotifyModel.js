@@ -1,8 +1,10 @@
+const { Locale } = require("../class/Locale");
 const YTNotifySchema = require("../schemas/YTNotify");
 const { Colors, EmbedBuilder } = require("discord.js");
 
 module.exports = {
     async execute(interaction, client) {
+        const locale = new Locale(interaction.locale);
         const parts = interaction.customId.split("_");
 
         const actionType = parts[1];
@@ -16,17 +18,25 @@ module.exports = {
                         embeds: [
                             new EmbedBuilder()
                                 .setColor(Colors.Red)
-                                .setDescription(`Unsubscribed from **${data.YoutubeChannelId}** in <#${data.ChannelId}>`)
+                                .setDescription(locale.replacePlaceholders(locale.getLocaleString("modal.submit.YTNotifyModel.delete.success"), [data.YoutubeChannelId, data.ChannelId]))
                         ],
                         ephemeral: true
                     });
 
-                    if (interaction.message && interaction.message.deletable) {
+                    try {
                         await interaction.message.delete();
-                    }
+                    } catch (err) { }
                 } catch (error) {
                     if (error.code !== 'InteractionAlreadyReplied') {
                         console.error('Error handling delete action:', error);
+                        await interaction.reply({
+                            embeds: [
+                                new EmbedBuilder()
+                                    .setColor(Colors.Red)
+                                    .setDescription(locale.getLocaleString("modal.submit.YTNotifyModel.delete.fail"))
+                            ],
+                            ephemeral: true
+                        });
                     }
                 }
                 break;
@@ -40,17 +50,25 @@ module.exports = {
                         embeds: [
                             new EmbedBuilder()
                                 .setColor(Colors.Red)
-                                .setDescription(`Edited Message to \`\`\`${editedMessage}\`\`\``)
+                                .setDescription(locale.replacePlaceholders(locale.getLocaleString("modal.submit.YTNotifyModel.editMessage.success"), [editedMessage]))
                         ],
                         ephemeral: true
                     });
 
-                    if (interaction.message && interaction.message.deletable) {
+                    try {
                         await interaction.message.delete();
-                    }
+                    } catch (err) { }
                 } catch (error) {
                     if (error.code !== 'InteractionAlreadyReplied') {
                         console.error('Error handling edit message action:', error);
+                        await interaction.reply({
+                            embeds: [
+                                new EmbedBuilder()
+                                    .setColor(Colors.Red)
+                                    .setDescription(locale.getLocaleString("modal.submit.YTNotifyModel.editMessage.fail"))
+                            ],
+                            ephemeral: true
+                        });
                     }
                 }
                 break;
@@ -63,17 +81,25 @@ module.exports = {
                         embeds: [
                             new EmbedBuilder()
                                 .setColor(Colors.Red)
-                                .setDescription(`Reseted Message to \`\`\`New video from **{channel}**!\n{url}\`\`\``)
+                                .setDescription(locale.getLocaleString("modal.submit.YTNotifyModel.resetMessage.success"))
                         ],
                         ephemeral: true
                     });
 
-                    if (interaction.message && interaction.message.deletable) {
+                    try {
                         await interaction.message.delete();
-                    }
+                    } catch (err) { }
                 } catch (error) {
                     if (error.code !== 'InteractionAlreadyReplied') {
                         console.error('Error handling reset message action:', error);
+                        await interaction.reply({
+                            embeds: [
+                                new EmbedBuilder()
+                                    .setColor(Colors.Red)
+                                    .setDescription(locale.getLocaleString("modal.submit.YTNotifyModel.resetMessage.fail"))
+                            ],
+                            ephemeral: true
+                        });
                     }
                 }
                 break;
