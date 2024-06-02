@@ -66,6 +66,24 @@
     "modal.submit.YTNotifyModel.resetMessage.success": "Reseted Message to ```New video from **{channel}**!\n{url}```",
     "modal.submit.YTNotifyModel.resetMessage.fail": "Can't reset message. Please try again later.",
 
+    "command.giveaway.create.title": "Create new Giveaway",
+    "command.giveaway.create.period": "Period",
+    "command.giveaway.create.period.placeholder": "ex. 10 seconds, 30 minutes, 24 hours, 1 day, 2 weeks, 3 months or 1 years",
+    "command.giveaway.create.winner": "Winners",
+    "command.giveaway.create.winner.placeholder": "ex. 1",
+    "command.giveaway.create.reward": "Reward",
+    "command.giveaway.create.reward.placeholder": "ex. $20 Discount",
+    "command.giveaway.create.description": "Description",
+    "command.giveaway.create.description.placeholder": "ex. $20 Discount for Starbuck",
+
+    "modal.submit.giveaway.create.success": "Created Giveaway with Id: `{0}`",
+
+    "command.giveaway.end.success": "Scheduled giveaway to end, it may take up to a minute to finish",
+    "command.giveaway.end.notfound": "Not Found Giveaway",
+
+    "event.giveaway.send": "🎉 Congratulations {0}! you won **{1}**!",
+    "event.giveaway.end.nowinner": "No Winner for **{0}**",
+
     "database.mongodb": "MongoDB",
 
     "byte.gb": "GB",
