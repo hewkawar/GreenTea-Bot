@@ -26,13 +26,13 @@
   "dependencies": {
     "axios": "^1.7.2",
     "discord.js": "^14.15.2",
+    "dotenv": "^16.4.5",
     "moment": "^2.30.1",
     "mongoose": "^8.4.1",
     "xml2js": "^0.6.2",
     "ytsr": "^3.8.4"
   },
   "devDependencies": {
-    "dotenv": "^16.4.5",
     "nodemon": "^3.1.2"
   }
 }
